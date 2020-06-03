@@ -69,11 +69,13 @@ df['sql_yn'] = df['Job Description'].apply(lambda x: 1 if 'sql' in x.lower() els
 #machine learning
 df['ml_yn'] = df['Job Description'].apply(lambda x: 1 if 'machine learning' in x.lower() else 0)
 
-df['azure_yn'].value_counts()
-df.columns
+
+
 df_out = df.drop(['Unnamed: 0'], axis = 1)
 
-df_out.to_csv('salary_data_cleaned', index = False)
+df_out.to_csv('C:/Users/Edward Liang/Documents/ds_salary_proj/salary_data_cleaned.csv', index = False)
+
+
 
 
 
