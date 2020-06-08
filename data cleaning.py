@@ -67,8 +67,22 @@ df['azure_yn'] = df['Job Description'].apply(lambda x: 1 if 'azure' in x.lower()
 df['sql_yn'] = df['Job Description'].apply(lambda x: 1 if 'sql' in x.lower() else 0)
 
 #machine learning
-df['ml_yn'] = df['Job Description'].apply(lambda x: 1 if 'machine learning' in x.lower() else 0)
+df['ml_yn'] = df['Job Description'].apply(lambda x: 1 if 'machine learning' or 'modeling' in x.lower() else 0)
 
+df['ml_yn'].value_counts()
+
+#Statistics
+df['stats_yn'] = df['Job Description'].apply(lambda x: 1 if 'Statistics' in x.lower() else 0)
+
+df['stats_yn'].value_counts()
+
+#mathematics
+df['math_yn'] = df['Job Description'].apply(lambda x: 1 if 'mathematics' in x.lower() else 0)
+df['math_yn'].value_counts()
+
+#probabilities
+df['prob_yn'] = df['Job Description'].apply(lambda x: 1 if 'probabilities' or 'probability' in x.lower() else 0)
+df['prob_yn'].value_counts()
 
 
 df_out = df.drop(['Unnamed: 0'], axis = 1)

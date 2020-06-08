@@ -1,0 +1,749 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import matplotlib.pyplot as plt\n",
+    "import seaborn as sns"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df = pd.read_csv('salary_data_cleaned.csv')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 39,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Job Title</th>\n",
+       "      <th>Salary Estimate</th>\n",
+       "      <th>Job Description</th>\n",
+       "      <th>Rating</th>\n",
+       "      <th>Company Name</th>\n",
+       "      <th>Location</th>\n",
+       "      <th>Headquarters</th>\n",
+       "      <th>Size</th>\n",
+       "      <th>Founded</th>\n",
+       "      <th>Type of ownership</th>\n",
+       "      <th>...</th>\n",
+       "      <th>job_state</th>\n",
+       "      <th>same_state</th>\n",
+       "      <th>age</th>\n",
+       "      <th>python_yn</th>\n",
+       "      <th>r_yn</th>\n",
+       "      <th>spark_yn</th>\n",
+       "      <th>aws_yn</th>\n",
+       "      <th>azure_yn</th>\n",
+       "      <th>sql_yn</th>\n",
+       "      <th>ml_yn</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Data Scientist</td>\n",
+       "      <td>$53K-$91K (Glassdoor est.)</td>\n",
+       "      <td>Data Scientist\\r\\nLocation: Albuquerque, NM\\r\\...</td>\n",
+       "      <td>3.8</td>\n",
+       "      <td>Tecolote Research\\r\\n3.8</td>\n",
+       "      <td>Albuquerque, NM</td>\n",
+       "      <td>Goleta, CA</td>\n",
+       "      <td>501 to 1000 employees</td>\n",
+       "      <td>1973</td>\n",
+       "      <td>Company - Private</td>\n",
+       "      <td>...</td>\n",
+       "      <td>NM</td>\n",
+       "      <td>0</td>\n",
+       "      <td>47</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Healthcare Data Scientist</td>\n",
+       "      <td>$63K-$112K (Glassdoor est.)</td>\n",
+       "      <td>What You Will Do:\\r\\n\\r\\nI. General Summary\\r\\...</td>\n",
+       "      <td>3.4</td>\n",
+       "      <td>University of Maryland Medical System\\r\\n3.4</td>\n",
+       "      <td>Linthicum, MD</td>\n",
+       "      <td>Baltimore, MD</td>\n",
+       "      <td>10000+ employees</td>\n",
+       "      <td>1984</td>\n",
+       "      <td>Other Organization</td>\n",
+       "      <td>...</td>\n",
+       "      <td>MD</td>\n",
+       "      <td>0</td>\n",
+       "      <td>36</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Data Scientist</td>\n",
+       "      <td>$80K-$90K (Glassdoor est.)</td>\n",
+       "      <td>KnowBe4, Inc. is a high growth information sec...</td>\n",
+       "      <td>4.8</td>\n",
+       "      <td>KnowBe4\\r\\n4.8</td>\n",
+       "      <td>Clearwater, FL</td>\n",
+       "      <td>Clearwater, FL</td>\n",
+       "      <td>501 to 1000 employees</td>\n",
+       "      <td>2010</td>\n",
+       "      <td>Company - Private</td>\n",
+       "      <td>...</td>\n",
+       "      <td>FL</td>\n",
+       "      <td>1</td>\n",
+       "      <td>10</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>Data Scientist</td>\n",
+       "      <td>$56K-$97K (Glassdoor est.)</td>\n",
+       "      <td>*Organization and Job ID**\\r\\nJob ID: 310709\\r...</td>\n",
+       "      <td>3.8</td>\n",
+       "      <td>PNNL\\r\\n3.8</td>\n",
+       "      <td>Richland, WA</td>\n",
+       "      <td>Richland, WA</td>\n",
+       "      <td>1001 to 5000 employees</td>\n",
+       "      <td>1965</td>\n",
+       "      <td>Government</td>\n",
+       "      <td>...</td>\n",
+       "      <td>WA</td>\n",
+       "      <td>1</td>\n",
+       "      <td>55</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>Data Scientist</td>\n",
+       "      <td>$86K-$143K (Glassdoor est.)</td>\n",
+       "      <td>Data Scientist\\r\\nAffinity Solutions / Marketi...</td>\n",
+       "      <td>2.9</td>\n",
+       "      <td>Affinity Solutions\\r\\n2.9</td>\n",
+       "      <td>New York, NY</td>\n",
+       "      <td>New York, NY</td>\n",
+       "      <td>51 to 200 employees</td>\n",
+       "      <td>1998</td>\n",
+       "      <td>Company - Private</td>\n",
+       "      <td>...</td>\n",
+       "      <td>NY</td>\n",
+       "      <td>1</td>\n",
+       "      <td>22</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>5 rows × 30 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                   Job Title              Salary Estimate  \\\n",
+       "0             Data Scientist   $53K-$91K (Glassdoor est.)   \n",
+       "1  Healthcare Data Scientist  $63K-$112K (Glassdoor est.)   \n",
+       "2             Data Scientist   $80K-$90K (Glassdoor est.)   \n",
+       "3             Data Scientist   $56K-$97K (Glassdoor est.)   \n",
+       "4             Data Scientist  $86K-$143K (Glassdoor est.)   \n",
+       "\n",
+       "                                     Job Description  Rating  \\\n",
+       "0  Data Scientist\\r\\nLocation: Albuquerque, NM\\r\\...     3.8   \n",
+       "1  What You Will Do:\\r\\n\\r\\nI. General Summary\\r\\...     3.4   \n",
+       "2  KnowBe4, Inc. is a high growth information sec...     4.8   \n",
+       "3  *Organization and Job ID**\\r\\nJob ID: 310709\\r...     3.8   \n",
+       "4  Data Scientist\\r\\nAffinity Solutions / Marketi...     2.9   \n",
+       "\n",
+       "                                   Company Name         Location  \\\n",
+       "0                      Tecolote Research\\r\\n3.8  Albuquerque, NM   \n",
+       "1  University of Maryland Medical System\\r\\n3.4    Linthicum, MD   \n",
+       "2                                KnowBe4\\r\\n4.8   Clearwater, FL   \n",
+       "3                                   PNNL\\r\\n3.8     Richland, WA   \n",
+       "4                     Affinity Solutions\\r\\n2.9     New York, NY   \n",
+       "\n",
+       "     Headquarters                    Size  Founded   Type of ownership  ...  \\\n",
+       "0      Goleta, CA   501 to 1000 employees     1973   Company - Private  ...   \n",
+       "1   Baltimore, MD        10000+ employees     1984  Other Organization  ...   \n",
+       "2  Clearwater, FL   501 to 1000 employees     2010   Company - Private  ...   \n",
+       "3    Richland, WA  1001 to 5000 employees     1965          Government  ...   \n",
+       "4    New York, NY     51 to 200 employees     1998   Company - Private  ...   \n",
+       "\n",
+       "  job_state same_state age python_yn  r_yn  spark_yn  aws_yn  azure_yn  \\\n",
+       "0        NM          0  47         1     0         0       0         0   \n",
+       "1        MD          0  36         1     0         0       0         0   \n",
+       "2        FL          1  10         1     0         1       0         0   \n",
+       "3        WA          1  55         1     0         0       0         0   \n",
+       "4        NY          1  22         1     0         0       0         0   \n",
+       "\n",
+       "   sql_yn ml_yn  \n",
+       "0       0     1  \n",
+       "1       0     1  \n",
+       "2       1     1  \n",
+       "3       0     1  \n",
+       "4       1     1  \n",
+       "\n",
+       "[5 rows x 30 columns]"
+      ]
+     },
+     "execution_count": 39,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 40,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Index(['Job Title', 'Salary Estimate', 'Job Description', 'Rating',\n",
+       "       'Company Name', 'Location', 'Headquarters', 'Size', 'Founded',\n",
+       "       'Type of ownership', 'Industry', 'Sector', 'Revenue', 'Competitors',\n",
+       "       'hourly', 'employer_provided', 'min_salary', 'max_salary', 'avg_salary',\n",
+       "       'company_txt', 'job_state', 'same_state', 'age', 'python_yn', 'r_yn',\n",
+       "       'spark_yn', 'aws_yn', 'azure_yn', 'sql_yn', 'ml_yn'],\n",
+       "      dtype='object')"
+      ]
+     },
+     "execution_count": 40,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.columns\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 41,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0       NM\n",
+       "1       MD\n",
+       "2       FL\n",
+       "3       WA\n",
+       "4       NY\n",
+       "5       TX\n",
+       "6       MD\n",
+       "7       CA\n",
+       "8       NY\n",
+       "9       NY\n",
+       "10      CA\n",
+       "11      VA\n",
+       "12      TX\n",
+       "13      WA\n",
+       "14      MA\n",
+       "15      NJ\n",
+       "16      MA\n",
+       "17      CA\n",
+       "18      CA\n",
+       "19      CO\n",
+       "20      WA\n",
+       "21      TX\n",
+       "22      IL\n",
+       "23      KY\n",
+       "24      VA\n",
+       "25      MA\n",
+       "26      OR\n",
+       "27      MA\n",
+       "28      CT\n",
+       "29      FL\n",
+       "      ... \n",
+       "712     CA\n",
+       "713     MD\n",
+       "714     PA\n",
+       "715     NC\n",
+       "716     CA\n",
+       "717     OH\n",
+       "718     IN\n",
+       "719     FL\n",
+       "720     MA\n",
+       "721     NY\n",
+       "722     IL\n",
+       "723     VA\n",
+       "724     MA\n",
+       "725     NC\n",
+       "726     CA\n",
+       "727     CA\n",
+       "728     GA\n",
+       "729     NY\n",
+       "730     MA\n",
+       "731     MA\n",
+       "732     CA\n",
+       "733     CA\n",
+       "734     MA\n",
+       "735     CA\n",
+       "736     PA\n",
+       "737     MA\n",
+       "738     TN\n",
+       "739     PA\n",
+       "740     PA\n",
+       "741     OH\n",
+       "Name: job_state, Length: 742, dtype: object"
+      ]
+     },
+     "execution_count": 41,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df['job_state']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 42,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def title_simplifier(title):\n",
+    "    if 'scientist' in title.lower():\n",
+    "        return 'data scientist'\n",
+    "    elif 'data engineer' in title.lower():\n",
+    "        return 'data engineer'\n",
+    "    elif 'analyst' in title.lower():\n",
+    "        return 'analyst'\n",
+    "    elif 'machine learning' in title.lower():\n",
+    "        return 'mle'\n",
+    "    elif 'manager' in title.lower():\n",
+    "        return 'manager'\n",
+    "    elif 'director' in title.lower():\n",
+    "        return 'director'\n",
+    "    else:\n",
+    "        return 'na'\n",
+    "\n",
+    "def seniority(title):\n",
+    "    if 'sr' in title.lower() or 'senior' in title.lower() or 'lead' in title.lower() or 'principal' in title.lower():\n",
+    "        return 'senior'\n",
+    "    elif 'junior' in title.lower() or 'jr' in title.lower():\n",
+    "        return 'junior'\n",
+    "    else:\n",
+    "        return 'na'\n",
+    "\n",
+    "    "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 43,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df['job_simp'] = df['Job Title'].apply(title_simplifier)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 44,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "data scientist    438\n",
+       "data engineer     119\n",
+       "analyst           100\n",
+       "na                 41\n",
+       "manager            21\n",
+       "mle                12\n",
+       "director           11\n",
+       "Name: job_simp, dtype: int64"
+      ]
+     },
+     "execution_count": 44,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df['job_simp'].value_counts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 45,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "na        519\n",
+       "senior    220\n",
+       "junior      3\n",
+       "Name: seniority, dtype: int64"
+      ]
+     },
+     "execution_count": 45,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df['seniority'] = df['Job Title'].apply(seniority)\n",
+    "df['seniority'].value_counts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 49,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       " CA             151\n",
+       " MA             103\n",
+       " NY              72\n",
+       " VA              41\n",
+       " IL              40\n",
+       " MD              35\n",
+       " PA              33\n",
+       " TX              28\n",
+       " NC              21\n",
+       " WA              21\n",
+       " NJ              17\n",
+       " FL              16\n",
+       " OH              14\n",
+       " TN              13\n",
+       " CO              11\n",
+       " DC              11\n",
+       " UT              10\n",
+       " WI              10\n",
+       " IN              10\n",
+       " AZ               9\n",
+       " MO               9\n",
+       " AL               8\n",
+       " GA               6\n",
+       " KY               6\n",
+       " DE               6\n",
+       " MI               6\n",
+       " CT               5\n",
+       " IA               5\n",
+       " OR               4\n",
+       " LA               4\n",
+       " NE               4\n",
+       " NM               3\n",
+       " KS               3\n",
+       " MN               2\n",
+       " ID               2\n",
+       " RI               1\n",
+       " Los Angeles      1\n",
+       " SC               1\n",
+       "Name: job_state, dtype: int64"
+      ]
+     },
+     "execution_count": 49,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "#fix state Los Angles\n",
+    "df.job_state.value_counts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 54,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Index(['Job Title', 'Salary Estimate', 'Job Description', 'Rating',\n",
+       "       'Company Name', 'Location', 'Headquarters', 'Size', 'Founded',\n",
+       "       'Type of ownership', 'Industry', 'Sector', 'Revenue', 'Competitors',\n",
+       "       'hourly', 'employer_provided', 'min_salary', 'max_salary', 'avg_salary',\n",
+       "       'company_txt', 'job_state', 'same_state', 'age', 'python_yn', 'r_yn',\n",
+       "       'spark_yn', 'aws_yn', 'azure_yn', 'sql_yn', 'ml_yn', 'job_simp',\n",
+       "       'seniority', 'job state'],\n",
+       "      dtype='object')"
+      ]
+     },
+     "execution_count": 54,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.columns"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 67,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df['job_state'] = df.job_state.apply(lambda x: x.strip() if x.strip().lower() != 'los angeles' else 'CA')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 68,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "CA    152\n",
+       "MA    103\n",
+       "NY     72\n",
+       "VA     41\n",
+       "IL     40\n",
+       "MD     35\n",
+       "PA     33\n",
+       "TX     28\n",
+       "WA     21\n",
+       "NC     21\n",
+       "NJ     17\n",
+       "FL     16\n",
+       "OH     14\n",
+       "TN     13\n",
+       "CO     11\n",
+       "DC     11\n",
+       "WI     10\n",
+       "UT     10\n",
+       "IN     10\n",
+       "AZ      9\n",
+       "MO      9\n",
+       "AL      8\n",
+       "GA      6\n",
+       "MI      6\n",
+       "DE      6\n",
+       "KY      6\n",
+       "IA      5\n",
+       "CT      5\n",
+       "OR      4\n",
+       "LA      4\n",
+       "NE      4\n",
+       "NM      3\n",
+       "KS      3\n",
+       "MN      2\n",
+       "ID      2\n",
+       "SC      1\n",
+       "RI      1\n",
+       "Name: job_state, dtype: int64"
+      ]
+     },
+     "execution_count": 68,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df['job_state'].value_counts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 76,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df['job state'] = df['job state'].apply(lambda x: 'CA' if x.strip().lower() == 'los angeles' else x.strip())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 77,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "CA    152\n",
+       "MA    103\n",
+       "NY     72\n",
+       "VA     41\n",
+       "IL     40\n",
+       "MD     35\n",
+       "PA     33\n",
+       "TX     28\n",
+       "WA     21\n",
+       "NC     21\n",
+       "NJ     17\n",
+       "FL     16\n",
+       "OH     14\n",
+       "TN     13\n",
+       "CO     11\n",
+       "DC     11\n",
+       "WI     10\n",
+       "UT     10\n",
+       "IN     10\n",
+       "AZ      9\n",
+       "MO      9\n",
+       "AL      8\n",
+       "GA      6\n",
+       "MI      6\n",
+       "DE      6\n",
+       "KY      6\n",
+       "IA      5\n",
+       "CT      5\n",
+       "OR      4\n",
+       "LA      4\n",
+       "NE      4\n",
+       "NM      3\n",
+       "KS      3\n",
+       "MN      2\n",
+       "ID      2\n",
+       "SC      1\n",
+       "RI      1\n",
+       "Name: job state, dtype: int64"
+      ]
+     },
+     "execution_count": 77,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df['job state'].value_counts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 82,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Index(['Job Title', 'Salary Estimate', 'Job Description', 'Rating',\n",
+       "       'Company Name', 'Location', 'Headquarters', 'Size', 'Founded',\n",
+       "       'Type of ownership', 'Industry', 'Sector', 'Revenue', 'Competitors',\n",
+       "       'hourly', 'employer_provided', 'min_salary', 'max_salary', 'avg_salary',\n",
+       "       'company_txt', 'job_state', 'same_state', 'age', 'python_yn', 'r_yn',\n",
+       "       'spark_yn', 'aws_yn', 'azure_yn', 'sql_yn', 'ml_yn', 'job_simp',\n",
+       "       'seniority'],\n",
+       "      dtype='object')"
+      ]
+     },
+     "execution_count": 82,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.columns"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 81,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df.drop(['job state'], inplace = True, axis =1 )"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
